@@ -15,12 +15,14 @@ pub fn compile(code: &str, name: &str) -> std::io::Result<()> {
     format!("./{name}/rust-toolchain.toml"),
     include_str!("./../../rust-toolchain.toml"),
   )?;
+  std::fs::write(format!("./{name}/build.rs"), include_str!("./../../build.rs"))?;
 
   // hvm/src
   std::fs::create_dir(format!("./{name}/src")).ok();
   std::fs::write(format!("./{name}/src/main.rs"), include_str!("./../main.rs"))?;
   std::fs::write(format!("./{name}/src/lib.rs"), include_str!("./../lib.rs"))?;
   std::fs::write(format!("./{name}/src/api.rs"), include_str!("./../api.rs"))?;
+  std::fs::write(format!("./{name}/src/polyfills.rs"), include_str!("./../polyfills.rs"))?;
 
   // hvm/src/compiler
   std::fs::create_dir(format!("./{name}/src/compiler")).ok();
